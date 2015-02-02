@@ -1,0 +1,10 @@
+%section.add_course.container
+  .row
+    %h2 Add a New Course
+    .row
+      .col-md-8
+        .form-group
+          = bootstrap_form_for @course do |f|
+            = f.text_field :name
+            = f.text_field :provider
+            %input(type="submit" value="Add Course" class="btn btn-success")
