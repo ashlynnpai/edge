@@ -23,16 +23,29 @@ describe CoursesController do
      context 'with invalid data' do
        it 'does not create course record' do
          post :create, course: Fabricate.attributes_for(:course, provider: nil)
-        expect(Course.count).to eq(0)
+         expect(Course.count).to eq(0)
       end  
        it 'sets the flash error message' do
-        post :create, course: Fabricate.attributes_for(:course, provider: nil)
+         post :create, course: Fabricate.attributes_for(:course, provider: nil)
          expect(flash[:danger]).not_to be_blank
        end
        it 'expects render new' do
-        post :create, course: Fabricate.attributes_for(:course, provider: nil)
-        expect(response).to render_template 'new'
+         post :create, course: Fabricate.attributes_for(:course, provider: nil)
+         expect(response).to render_template 'new'
        end
     end
   end
+  
+  describe "GET show" do
+    it "sets @course" do
+      course = Fabricate(:course)
+      get :show, id: course.slug
+      expect(assigns(:course)).to eq(course)
+    end
+    it "renders the template show" do
+      course = Fabricate(:course)
+      get :show, id: course.slug
+      expect(assigns).to render_template :show
+    end
+   end
 end
