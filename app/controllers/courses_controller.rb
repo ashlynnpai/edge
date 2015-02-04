@@ -17,7 +17,6 @@ class CoursesController < ApplicationController
   
   def show
     @course = Course.find_by slug: params[:id]
-    
   end
   
   private

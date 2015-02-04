@@ -47,5 +47,5 @@ describe CoursesController do
       get :show, id: course.slug
       expect(assigns).to render_template :show
     end
-   end
+  end
 end
