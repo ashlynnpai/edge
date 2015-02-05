@@ -1,0 +1,21 @@
+%section.login.container
+  .message
+    = render 'shared/messages' 
+  .row
+    .col-sm-8
+      %h3 Login to use all our features.
+      %fieldset
+        = bootstrap_form_tag url: '/login' do 
+          .form-group
+            = label_tag :email, "Email Address" 
+            .row
+              .col-sm-4
+                = text_field_tag :email, nil, class: 'form-control'
+          .form-group
+            = label_tag :password, "Password"
+            .row
+              .col-sm-4
+                = password_field_tag :password, nil, class: 'form-control'
+            %br
+            %fieldset.form-group.action
+              %input(type="submit" value="Sign in" class="btn btn-success")

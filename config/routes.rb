@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   
-  root to: 'users#new'
+  root to: 'statics#index'
 
   resources :courses, only: [:new, :create, :show] do
   end
