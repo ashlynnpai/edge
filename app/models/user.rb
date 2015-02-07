@@ -1,5 +1,9 @@
 class User < ActiveRecord::Base
   include Sluggable
+  
+  has_many :users_courses
+  has_many :courses, through :users_courses
+  
   sluggable_column :name
   
   has_secure_password validations: false
