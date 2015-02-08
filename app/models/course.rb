@@ -1,8 +1,8 @@
 class Course < ActiveRecord::Base
   include Sluggable
   
-  has_many :users_courses
-  has_many :users, through :users_courses
+  has_many :user_courses
+  has_many :users, through: :user_courses
   
   
   validates :name, presence: true, uniqueness: true

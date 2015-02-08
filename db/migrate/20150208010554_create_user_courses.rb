@@ -1,6 +1,6 @@
-class CreateUsersCourses < ActiveRecord::Migration
+class CreateUserCourses < ActiveRecord::Migration
   def change
-    create_table :users_courses do |t|
+    create_table :user_courses do |t|
       t.integer :user_id, :course_id
       t.string :status
       t.boolean :course_creator

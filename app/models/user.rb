@@ -1,8 +1,8 @@
 class User < ActiveRecord::Base
   include Sluggable
   
-  has_many :users_courses
-  has_many :courses, through :users_courses
+  has_many :user_courses
+  has_many :courses, through: :user_courses
   
   sluggable_column :name
   
