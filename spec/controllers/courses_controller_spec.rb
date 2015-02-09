@@ -11,7 +11,7 @@ describe CoursesController do
   end
   
   describe 'POST create' do
-    context 'with valid data' do
+    context 'with valid data and authenticated user' do
       before do
         @user = Fabricate(:user)
         session[:user_id] = @user.id
@@ -28,8 +28,16 @@ describe CoursesController do
         post :create, course: Fabricate.attributes_for(:course)
         expect(UserCourse.count).to eq(1)
       end
+      it 'creates a record with the current user id' do
+        post :create, course: Fabricate.attributes_for(:course)
+        expect(UserCourse.first.user_id).to eq(@user.id)
+      end
+      it 'sets the course creator field to true' do
+        post :create, course: Fabricate.attributes_for(:course)
+        expect(UserCourse.first.course_creator).to eq(true)
+      end
     end
-    context 'with invalid data' do
+    context 'with invalid data and authenticated user' do
        before {set_current_user}
        it 'does not create course record' do
          post :create, course: Fabricate.attributes_for(:course, provider: nil)
@@ -43,16 +51,25 @@ describe CoursesController do
          post :create, course: Fabricate.attributes_for(:course, provider: nil)
          expect(response).to render_template 'new'
        end
+       it 'does not create the join table usercourse record' do
+         post :create, course: Fabricate.attributes_for(:course, provider: nil)
+         expect(UserCourse.count).to eq(0)
+       end
     end
-    context 'with valid data' do
-      it 'creates course record' do
-        post :create, course: Fabricate.attributes_for(:course)
-        expect(Course.count).to eq(1)
+    context 'with no authenticated user' do
+       before { session[:user_id] = nil }
+       it 'does not create course record' do
+         post :create, course: Fabricate.attributes_for(:course)
+         expect(Course.count).to eq(0)
       end  
-      it 'sets the flash success message' do
-        post :create, course: Fabricate.attributes_for(:course)
-        expect(flash[:success]).not_to be_blank
-      end
+       it 'expects render new' do
+         post :create, course: Fabricate.attributes_for(:course)
+         expect(response).to redirect_to login_path
+       end
+       it 'does not create the join table usercourse record' do
+         post :create, course: Fabricate.attributes_for(:course)
+         expect(UserCourse.count).to eq(0)
+       end
     end
   end
   
