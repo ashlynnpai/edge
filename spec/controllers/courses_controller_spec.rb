@@ -1,9 +1,12 @@
 require 'spec_helper'
 
 describe CoursesController do
-  before {set_current_user}
   describe 'GET new' do
+    it_behaves_like "requires sign in" do
+      let(:action) {get :new}
+    end
     it 'sets @course' do
+      set_current_user
       get :new
       expect(assigns(:course)).to be_instance_of Course
       expect(assigns(:course)).to be_new_record
@@ -11,10 +14,13 @@ describe CoursesController do
   end
   
   describe 'POST create' do
+    it_behaves_like "requires sign in" do
+      let(:action) {post :create}
+    end
     context 'with valid data and authenticated user' do
+        let(:user) { Fabricate(:user) }
       before do
-        @user = Fabricate(:user)
-        session[:user_id] = @user.id
+        session[:user_id] = user.id
       end
       it 'creates course record' do
         post :create, course: Fabricate.attributes_for(:course)
@@ -30,7 +36,7 @@ describe CoursesController do
       end
       it 'creates a record with the current user id' do
         post :create, course: Fabricate.attributes_for(:course)
-        expect(UserCourse.first.user_id).to eq(@user.id)
+        expect(UserCourse.first.user_id).to eq(user.id)
       end
       it 'sets the course creator field to true' do
         post :create, course: Fabricate.attributes_for(:course)
@@ -57,7 +63,6 @@ describe CoursesController do
        end
     end
     context 'with no authenticated user' do
-       before { session[:user_id] = nil }
        it 'does not create course record' do
          post :create, course: Fabricate.attributes_for(:course)
          expect(Course.count).to eq(0)
@@ -83,6 +88,38 @@ describe CoursesController do
       course = Fabricate(:course)
       get :show, id: course.slug
       expect(assigns).to render_template :show
+    end
+  end
+  describe "POST add_completed_course" do
+    it_behaves_like "requires sign in" do
+      let(:action) {post :add_completed_course}
+    end
+    context 'with authenticated user' do
+      let(:user) { Fabricate(:user) }
+      let(:course) { Fabricate(:course) }
+      before do
+        session[:user_id] = user.id
+      end
+      it 'creates the join table usercourse record' do
+        post :add_completed_course, user_id: user.id, course_id: course.slug
+        expect(UserCourse.count).to eq(1)
+      end
+      it 'creates a record with the current user id' do
+        post :add_completed_course, user_id: user.id, course_id: course.slug
+        expect(UserCourse.first.user_id).to eq(user.id)
+      end
+      it 'creates a record with the course id' do
+        post :add_completed_course, user_id: user.id, course_id: course.slug
+        expect(UserCourse.first.course_id).to eq(course.id)
+      end
+      it 'sets the course status to completed' do
+        post :add_completed_course, user_id: user.id, course_id: course.slug
+        expect(UserCourse.first.status).to eq('completed')
+      end
+      it 'sets the flash success message' do
+        post :add_completed_course, user_id: user.id, course_id: course.slug
+        expect(flash[:success]).not_to be_blank
+      end
     end
   end
 end

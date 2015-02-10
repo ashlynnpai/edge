@@ -1,5 +1,5 @@
 class CoursesController < ApplicationController
-  before_action :require_user, only: [:new, :create]
+  before_action :require_user, except: [:show]
   
   def new
     @course = Course.new
@@ -20,6 +20,14 @@ class CoursesController < ApplicationController
   
   def show
     @course = Course.find_by slug: params[:id]
+  end
+
+  def add_completed_course
+    @course = Course.find_by slug: params[:course_id]
+    usercourse = UserCourse.new(user_id: current_user.id, course: @course, status: "completed")
+    usercourse.save
+    flash[:success] = "You have added a completed course to your profile."
+    redirect_to root_path
   end
   
   private
