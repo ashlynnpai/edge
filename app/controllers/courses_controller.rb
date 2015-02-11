@@ -24,13 +24,22 @@ class CoursesController < ApplicationController
 
   def add_completed_course
     @course = Course.find_by slug: params[:course_id]
-    usercourse = UserCourse.new(user_id: current_user.id, course: @course, status: "completed")
-    usercourse.save
+      if find_usercourse
+        find_usercourse.update_column(:status, "completed")
+        find_usercourse.save
+      else  
+        usercourse = UserCourse.new(user_id: current_user.id, course: @course, status: "completed")    
+        usercourse.save
+      end
     flash[:success] = "You have added a completed course to your profile."
     redirect_to root_path
   end
   
   private
+    
+  def find_usercourse
+    usercourse = UserCourse.where(user_id: current_user.id, course: @course).first
+  end
 
   def course_params
     params.require(:course).permit(:name, :provider)

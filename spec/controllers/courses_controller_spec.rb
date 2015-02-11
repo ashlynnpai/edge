@@ -34,7 +34,7 @@ describe CoursesController do
         post :create, course: Fabricate.attributes_for(:course)
         expect(UserCourse.count).to eq(1)
       end
-      it 'creates a record with the current user id' do
+      it 'creates a usercourse record with the current user id' do
         post :create, course: Fabricate.attributes_for(:course)
         expect(UserCourse.first.user_id).to eq(user.id)
       end
@@ -100,7 +100,7 @@ describe CoursesController do
       before do
         session[:user_id] = user.id
       end
-      it 'creates the join table usercourse record' do
+      it 'creates the join table usercourse record if one does not exist' do
         post :add_completed_course, user_id: user.id, course_id: course.slug
         expect(UserCourse.count).to eq(1)
       end
@@ -119,6 +119,16 @@ describe CoursesController do
       it 'sets the flash success message' do
         post :add_completed_course, user_id: user.id, course_id: course.slug
         expect(flash[:success]).not_to be_blank
+      end
+      it 'does not create a new usercourse record if one already exists' do
+        UserCourse.create(user_id: user.id, course_id: course.id)
+        post :add_completed_course, user_id: user.id, course_id: course.slug
+        expect(UserCourse.count).to eq(1)
+      end
+      it 'updates the column on the existing record' do
+        UserCourse.create(user_id: user.id, course_id: course.id, status: nil)
+        post :add_completed_course, user_id: user.id, course_id: course.slug
+        expect(UserCourse.first.status).to eq('completed')
       end
     end
   end
