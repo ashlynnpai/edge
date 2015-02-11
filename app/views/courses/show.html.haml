@@ -1,2 +1,5 @@
 %section.show_course.container
   %h2= @course.name
+  %h4= @course.provider
+  - if current_user
+    %h5= link_to 'I completed this course', add_completed_course_path, method: :post, class: 'btn btn-success'
