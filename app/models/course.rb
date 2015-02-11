@@ -10,4 +10,8 @@ class Course < ActiveRecord::Base
 
   sluggable_column :name
   
+  def self.show_latest_courses
+    Course.order('created_at DESC').first(20)  
+  end
+  
 end

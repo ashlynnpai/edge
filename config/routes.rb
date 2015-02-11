@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   
   root to: 'statics#index'
 
-  resources :courses, only: [:new, :create, :show] do
+  resources :courses, only: [:index, :new, :create, :show] do
   end
   
   post 'add_completed_course', to: 'courses#add_completed_course'

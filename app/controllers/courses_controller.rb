@@ -1,6 +1,10 @@
 class CoursesController < ApplicationController
   before_action :require_user, except: [:show]
   
+  def index
+    @courses =  Course.all
+  end
+  
   def new
     @course = Course.new
   end
@@ -22,7 +26,7 @@ class CoursesController < ApplicationController
     @course = Course.find_by slug: params[:id]
   end
 
-  def add_completed_course
+  def add_completed_course(course)
     @course = Course.find_by slug: params[:course_id]
       if find_usercourse
         find_usercourse.update_column(:status, "completed")
