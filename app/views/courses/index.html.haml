@@ -5,4 +5,4 @@
       .col-sm-3    
         %h3= course.name
         - if current_user
-          %h5= link_to 'I completed this course', add_completed_course_path, method: :post, class: 'btn btn-success'
+          %h5= link_to 'I completed this course', add_completed_course_path(course: course), method: :post, class: 'btn btn-success'

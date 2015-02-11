@@ -26,7 +26,7 @@ class CoursesController < ApplicationController
     @course = Course.find_by slug: params[:id]
   end
 
-  def add_completed_course
+  def add_completed_course(course)
     @course = Course.find_by slug: params[:course_id]
       if find_usercourse
         find_usercourse.update_column(:status, "completed")
