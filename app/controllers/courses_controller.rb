@@ -24,16 +24,19 @@ class CoursesController < ApplicationController
   
   def show
     @course = Course.find_by slug: params[:id]
+    if @course == nil
+      redirect_to root_path
+    end
   end
-
-  def add_completed_course
     
+  def add_course_status
     @course = Course.find_by slug: params[:course_id]
+      mystatus = params[:status]
       if find_usercourse
-        find_usercourse.update_column(:status, "completed")
+        find_usercourse.update_column(:status, mystatus)
         find_usercourse.save
       else  
-        usercourse = UserCourse.new(user_id: current_user.id, course: @course, status: "completed")    
+        usercourse = UserCourse.new(user_id: current_user.id, course: @course, status: mystatus)    
         usercourse.save
       end
     flash[:success] = "You have added a completed course to your profile."

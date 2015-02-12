@@ -4,8 +4,9 @@ Rails.application.routes.draw do
 
   resources :courses, only: [:index, :new, :create, :show] do
   end
+
+  post 'add_course_status', to: 'courses#add_course_status'
   
-  post 'add_completed_course', to: 'courses#add_completed_course'
   
   resources :users, only: [:create, :show]
   

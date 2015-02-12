@@ -89,10 +89,20 @@ describe CoursesController do
       get :show, id: course.slug
       expect(assigns).to render_template :show
     end
+    it "redirects to root path for an invalid slug" do
+      course = Fabricate(:course, slug: "good-slug")
+      get :show, id: "bad-slug"
+      expect(response).to redirect_to root_path
+    end
+    it "redirects to valid slug" do
+      course = Fabricate(:course, slug: "good-slug")
+      get :show, id: course.slug
+      expect(response).to render_template 'show'
+    end
   end
-  describe "POST add_completed_course" do
+  describe "POST add_course_status" do
     it_behaves_like "requires sign in" do
-      let(:action) {post :add_completed_course}
+      let(:action) {post :add_course_status}
     end
     context 'with authenticated user' do
       let(:user) { Fabricate(:user) }
@@ -101,34 +111,34 @@ describe CoursesController do
         session[:user_id] = user.id
       end
       it 'creates the join table usercourse record if one does not exist' do
-        post :add_completed_course, user_id: user.id, course_id: course.slug
+        post :add_course_status, user_id: user.id, course_id: course.slug
         expect(UserCourse.count).to eq(1)
       end
       it 'creates a record with the current user id' do
-        post :add_completed_course, user_id: user.id, course_id: course.slug
+        post :add_course_status, user_id: user.id, course_id: course.slug
         expect(UserCourse.first.user_id).to eq(user.id)
       end
       it 'creates a record with the course id' do
-        post :add_completed_course, user_id: user.id, course_id: course.slug
+        post :add_course_status, user_id: user.id, course_id: course.slug
         expect(UserCourse.first.course_id).to eq(course.id)
       end
       it 'sets the course status to completed' do
-        post :add_completed_course, user_id: user.id, course_id: course.slug
+        post :add_course_status, user_id: user.id, course_id: course.slug, status: "completed"
         expect(UserCourse.first.status).to eq('completed')
       end
       it 'sets the flash success message' do
-        post :add_completed_course, user_id: user.id, course_id: course.slug
+        post :add_course_status, user_id: user.id, course_id: course.slug
         expect(flash[:success]).not_to be_blank
       end
       it 'does not create a new usercourse record if one already exists' do
         UserCourse.create(user_id: user.id, course_id: course.id)
-        post :add_completed_course, user_id: user.id, course_id: course.slug
+        post :add_course_status, user_id: user.id, course_id: course.slug
         expect(UserCourse.count).to eq(1)
       end
       it 'updates the column on the existing record' do
         UserCourse.create(user_id: user.id, course_id: course.id, status: nil)
-        post :add_completed_course, user_id: user.id, course_id: course.slug
-        expect(UserCourse.first.status).to eq('completed')
+        post :add_course_status, user_id: user.id, course_id: course.slug, status: "current"
+        expect(UserCourse.first.status).to eq('current')
       end
     end
   end
