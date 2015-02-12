@@ -87,17 +87,17 @@ describe CoursesController do
     it "renders the template show" do
       course = Fabricate(:course)
       get :show, id: course.slug
-      expect(assigns).to render_template :show
+      expect(response).to render_template :show
     end
     it "redirects to root path for an invalid slug" do
       course = Fabricate(:course, slug: "good-slug")
       get :show, id: "bad-slug"
       expect(response).to redirect_to root_path
     end
-    it "redirects to valid slug" do
+    it "renders show for a valid slug" do
       course = Fabricate(:course, slug: "good-slug")
       get :show, id: course.slug
-      expect(response).to render_template 'show'
+      expect(response).to render_template :show
     end
   end
   describe "POST add_course_status" do
