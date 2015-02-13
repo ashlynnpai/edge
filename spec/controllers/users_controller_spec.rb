@@ -41,4 +41,11 @@ describe UsersController do
     end
   end
   
+  describe "GET show_courses" do
+    it "sets @user" do
+        user = Fabricate(:user)
+        get :show, id: user.slug
+        expect(assigns(:user)).to eq(user)
+    end
+  end
 end

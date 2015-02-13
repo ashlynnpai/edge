@@ -5,7 +5,7 @@ class Course < ActiveRecord::Base
   has_many :users, through: :user_courses
   
   
-  validates :name, presence: true, uniqueness: true
+  validates :name, presence: true, uniqueness: { case_sensitive: false }
   validates :provider, presence: true
 
   sluggable_column :name

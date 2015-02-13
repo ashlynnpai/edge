@@ -18,6 +18,11 @@ class UsersController < ApplicationController
     @user = User.find_by slug: params[:id]
   end
   
+  def show_courses
+    @user = User.find_by slug: params[:id]
+  end
+    
+  
   private
   
   def user_params

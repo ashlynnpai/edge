@@ -1,2 +1,4 @@
 %section.show_user.container
   %h2= @user.name
+  
+  %h5= link_to 'See All Courses', transcript_path(@user)
