@@ -4,17 +4,13 @@
       .form-horizontal
         = bootstrap_form_for @user do |f|
           %header
-            %h3 Sign up to use all our features.
+            %h3 Sign up for Edge.
           %fieldset
             .col-sm-6
               = f.text_field :email, label: "Email"
-              = f.password_field :password, label: "Password", id: 'password'
-              -# = f.text_field :password_confirm, label: "Confirm Password", id: 'confirm-password'
-              -# = text_field_tag 'confirm', nil, id: 'confirm-password'
+              = f.password_field :password, label: "Password"
+              = f.password_field :password_confirmation, label: "Confirm Password"      
               = f.text_field :name , label: "Display Name"
           %fieldset.actions.control-group
             .controls
               = f.submit(@user.new_record? ? 'Register' : 'Update Profile', class: 'btn btn-success') 
-              
-:javascript 
-  src="js/home.js" type="text/javascript" charset="utf-8"   
