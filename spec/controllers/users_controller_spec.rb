@@ -28,7 +28,7 @@ describe UsersController do
         expect(response).to render_template :new
       end
       it "sets @user" do
-        expect(assigns(:user)).to be_instance_of(User)
+        expect(assigns(:user)).to be_a_new(User)
       end
     end
   end

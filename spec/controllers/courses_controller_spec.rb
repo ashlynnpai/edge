@@ -8,8 +8,7 @@ describe CoursesController do
     it 'sets @course' do
       set_current_user
       get :new
-      expect(assigns(:course)).to be_instance_of Course
-      expect(assigns(:course)).to be_new_record
+      expect(assigns(:course)).to be_a_new(Course)
     end
   end
   

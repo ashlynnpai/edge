@@ -16,5 +16,7 @@ Rails.application.routes.draw do
   get '/logout', to: 'sessions#destroy'
   
   get '/transcript', to: 'users#show_courses'
+  
+  resources :categories, only: [:new] 
       
 end
