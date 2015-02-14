@@ -2,3 +2,9 @@
   %h2= @user.name
   
   %h5= link_to 'See All Courses', transcript_path(@user)
+  
+  %h5 Latest Courses
+  
+  - @user.courses.show_latest_courses(10).each do |course|
+    .col-sm-3    
+      %h3= link_to course.name, course_path(course)
