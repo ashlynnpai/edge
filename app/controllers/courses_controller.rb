@@ -1,5 +1,5 @@
 class CoursesController < ApplicationController
-  before_action :require_user, except: [:show]
+  before_action :require_user, only: [:new, :create, :add_course_status]
   
   def index
     @courses =  Course.all

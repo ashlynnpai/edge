@@ -1,7 +1,7 @@
 %section.container
   %h3 Latest Courses Added
   .row      
-    - @courses.show_latest_courses.each do |course|
+    - @courses.show_latest_courses(20).each do |course|
       .col-sm-3    
         %h3= course.name
         - if current_user
