@@ -17,6 +17,6 @@ Rails.application.routes.draw do
   
   get '/transcript', to: 'users#show_courses'
   
-  resources :categories, only: [:new] 
+  resources :categories, only: [:new, :create] 
       
 end
