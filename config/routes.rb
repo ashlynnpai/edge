@@ -8,15 +8,18 @@ Rails.application.routes.draw do
   post 'add_course_status', to: 'courses#add_course_status'
   
   
-  resources :users, only: [:create, :show]
+  resources :users, only: [:create, :show] do
+    member do
+      get 'transcript'
+    end
+  end
   
   get '/register', to: 'users#new'  
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
   get '/logout', to: 'sessions#destroy'
+
   
-  get '/transcript', to: 'users#show_courses'
-  
-  resources :categories, only: [:new, :create] 
+  resources :categories, only: [:new, :create, :show] 
       
 end

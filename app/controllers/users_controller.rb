@@ -18,7 +18,7 @@ class UsersController < ApplicationController
     @user = User.find_by slug: params[:id]
   end
   
-  def show_courses
+  def transcript
     @user = User.find_by slug: params[:id]
   end
     

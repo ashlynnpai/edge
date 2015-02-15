@@ -4,6 +4,8 @@ class Course < ActiveRecord::Base
   has_many :user_courses
   has_many :users, through: :user_courses
   
+  has_many :course_categories
+  has_many :categories, through: :course_categories
   
   validates :name, presence: true, uniqueness: { case_sensitive: false }
   validates :provider, presence: true

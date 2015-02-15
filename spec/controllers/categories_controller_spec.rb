@@ -17,4 +17,21 @@ describe CategoriesController do
       expect(flash[:success]).not_to be_blank
     end
   end
+  describe "GET show" do
+    it "sets @category" do
+      category = Fabricate(:category)
+      get :show, id: category.slug
+      expect(assigns(:category)).to eq(category)
+    end
+    it "renders the template show" do
+      category = Fabricate(:category)
+      get :show, id: category.slug
+      expect(response).to render_template :show
+    end
+    it "redirects to root path for an invalid slug" do
+      category = Fabricate(:category, slug: "good-slug")
+      get :show, id: "bad-slug"
+      expect(response).to redirect_to root_path
+    end
+  end
 end

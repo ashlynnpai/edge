@@ -15,8 +15,12 @@ class CategoriesController < ApplicationController
     end
   end
   
+  def show
+    @category = Category.find_by slug: params[:id]
+    if @category == nil
+      redirect_to root_path
+    end
+  end
+
 end
 
-#   def course_params
-#     params.require(:course).permit(:name, :provider)
-#   end

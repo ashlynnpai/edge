@@ -41,7 +41,7 @@ describe UsersController do
     end
   end
   
-  describe "GET show_courses" do
+  describe "GET transcript" do
     it "sets @user" do
         user = Fabricate(:user)
         get :show, id: user.slug

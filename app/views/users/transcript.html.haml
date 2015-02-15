@@ -1,0 +1,8 @@
+%section.show_user.container
+  %h2= @user.name
+  
+  %h5 All Courses
+  
+  - @user.courses.each do |course|
+    .col-sm-3    
+      %h3= link_to course.name, course_path(course)
