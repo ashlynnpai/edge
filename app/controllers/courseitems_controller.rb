@@ -3,8 +3,14 @@ class CourseitemsController < ApplicationController
   
   def create
     @course = Course.find_by slug: params[:course_id]
-    #require 'pry'; binding.pry
-    Courseitem.create(course: @course, user: current_user, position: 1) unless current_user.courseitems.map(&:course).include?(@course)
+    Courseitem.create(course: @course, user: current_user, position: last_position) unless current_user.courseitems.map(&:course).include?(@course)
     redirect_to root_path
   end
+  
+  private
+  
+  def last_position
+    current_user.courseitems.count + 1
+  end
+  
 end
