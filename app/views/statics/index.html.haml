@@ -8,3 +8,6 @@
 %h5= link_to 'Register', register_path
 %h5= link_to 'Login', login_path
 %h5= link_to 'Logout', logout_path
+
+- if current_user
+  %h5= link_to 'Courselist', courseitems_path(current_user)

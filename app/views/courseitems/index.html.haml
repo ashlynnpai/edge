@@ -1,0 +1,6 @@
+%section.add_course.container
+  .row
+  %h3 Course Wishlist
+  - @courseitems.each do |courseitem|
+    %h4= courseitem.course.name
+    %h5= courseitem.course.provider
