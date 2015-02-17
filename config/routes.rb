@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   root to: 'statics#index'
 
   resources :courses, only: [:index, :new, :create, :show] do
+    resources :reviews, only: [:create]
   end
 
   post 'add_course_status', to: 'courses#add_course_status'

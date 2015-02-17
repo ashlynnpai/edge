@@ -6,4 +6,5 @@ describe Course do
   it { should validate_uniqueness_of (:name)}
   
   it { should have_many(:users) }
+  it { should have_many(:reviews) }
 end
