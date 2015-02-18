@@ -98,6 +98,12 @@ describe CoursesController do
       get :show, id: course.slug
       expect(response).to render_template :show
     end
+    it "sets @review" do
+      set_current_user
+      course = Fabricate(:course)
+      get :show, id: course.slug
+      expect(assigns(:review)).to be_a_new(Review)
+    end
   end
   describe "POST add_course_status" do
     it_behaves_like "requires sign in" do

@@ -26,6 +26,9 @@ class CoursesController < ApplicationController
     @course = Course.find_by slug: params[:id]
     if @course == nil
       redirect_to root_path
+    else
+      @reviews = @course.reviews
+      @review = Review.new  
     end
   end
     
