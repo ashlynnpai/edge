@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   has_many :courses, through: :user_courses
   has_many :courseitems, -> { order(position: :asc, updated_at: :desc) }
   has_many :reviews
+  has_many :posts
   
   sluggable_column :name
   
