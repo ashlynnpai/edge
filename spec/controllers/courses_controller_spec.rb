@@ -147,4 +147,21 @@ describe CoursesController do
       end
     end
   end
+  describe "GET study_hall" do
+    it "sets @course" do
+      course = Fabricate(:course)
+      get :study_hall, id: course.slug
+      expect(assigns(:course)).to eq(course)
+    end
+    it "redirects to root path for an invalid slug" do
+      course = Fabricate(:course, slug: "good-slug")
+      get :study_hall, id: "bad-slug"
+      expect(response).to redirect_to root_path
+    end
+    it "sets @post" do
+      course = Fabricate(:course)
+      get :study_hall, id: course.slug
+      expect(assigns(:post)).to be_a_new(Post)
+    end   
+  end
 end

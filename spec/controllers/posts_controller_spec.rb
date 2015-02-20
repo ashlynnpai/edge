@@ -21,8 +21,8 @@ describe PostsController do
       it "sets the flash success message" do
         expect(flash[:success]).not_to be_blank
       end
-      it "redirects to show course" do         
-        expect(response).to redirect_to course_path(course)
+      it "redirects to study hall path" do         
+        expect(response).to redirect_to study_hall_path(course)
       end
     end
     context "with unauthenticated users" do
@@ -36,9 +36,9 @@ describe PostsController do
       before do
         session[:user_id] = current_user.id
       end
-      it "renders the courses/show template" do
+      it "renders the study hall template" do
         post :create, post: Fabricate.attributes_for(:post, content: nil), course_id: course.slug
-        expect(response).to render_template('courses/show')
+        expect(response).to render_template('courses/study_hall')
       end
     end
   end

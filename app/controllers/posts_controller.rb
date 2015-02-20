@@ -7,10 +7,10 @@ class PostsController < ApplicationController
     @post.creator = current_user
     if @post.save
       flash[:success] = "Thank you for your post."
-      redirect_to course_path(@course)
+      redirect_to study_hall_path(@course)
     else
-      @posts = @course.reviews.reload
-      render 'courses/show'
+      @posts = @course.posts.reload
+      render 'courses/study_hall'
     end
   end
 end

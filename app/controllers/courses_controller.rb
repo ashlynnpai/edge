@@ -46,6 +46,16 @@ class CoursesController < ApplicationController
     redirect_to root_path
   end
   
+  def study_hall
+    @course = Course.find_by slug: params[:id]
+    if @course == nil
+      redirect_to root_path
+    else
+      @posts = @course.posts
+      @post = Post.new  
+    end
+  end
+  
   private
     
   def find_usercourse
