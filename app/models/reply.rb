@@ -1,8 +1,6 @@
-class Post < ActiveRecord::Base
+class Reply < ActiveRecord::Base
   belongs_to :creator, foreign_key: 'user_id', class_name: 'User'
-  belongs_to :course
-  has_many :replies
+  belongs_to :post
   
-  validates :title, presence: true
   validates :content, presence: true
 end

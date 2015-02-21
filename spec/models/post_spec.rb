@@ -6,4 +6,5 @@ describe Post do
   
   it { should belong_to(:course) }
   it { should belong_to(:creator) }
+  it { should have_many(:replies) }
 end

@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   has_many :courseitems, -> { order(position: :asc, updated_at: :desc) }
   has_many :reviews
   has_many :posts
+  has_many :replies
   
   sluggable_column :name
   

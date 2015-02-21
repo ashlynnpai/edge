@@ -6,6 +6,10 @@ Rails.application.routes.draw do
     resources :reviews, only: [:create]
     resources :posts, only: [:create]
   end
+  
+  resources :posts, only: [:show] do
+    resources :replies, only: [:create]
+  end
 
   get 'study_hall/:id', to: 'courses#study_hall', as: 'study_hall'
   post 'add_course_status', to: 'courses#add_course_status'
