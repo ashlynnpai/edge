@@ -1,12 +1,13 @@
-.row
-  = bootstrap_form_for [@course, post] do |f|
-    %fieldset
-    .form-group
-      %br
-      =f.text_field :title, label: "Post Title"
-      =f.text_area :content, label: "Your Post"
-      %fieldset.form-group.actions.clearfix
-      %input(type="submit" value="Submit" class="btn btn-success")
-      
+%section.show_post.container
+  .row
+    = bootstrap_form_for [@course, post] do |f|
+      %fieldset
+      .form-group
+        %br
+        =f.text_field :title, label: "Post Title"
+        =f.text_area :content, label: "Your Post"
+        %fieldset.form-group.actions.clearfix
+        %input(type="submit" value="Submit" class="btn btn-success")
+
       
       

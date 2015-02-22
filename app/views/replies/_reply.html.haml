@@ -1,0 +1,8 @@
+.row
+  = bootstrap_form_for [@post, reply] do |f|
+    %fieldset
+    .form-group
+      %br
+      =f.text_area :content, label: "Reply"
+      %fieldset.form-group.actions.clearfix
+      %input(type="submit" value="Submit" class="btn btn-success")

@@ -12,6 +12,9 @@
     %h5= link_to 'I am currently on this course', add_course_status_path(course_id: @course, :status => 'current'), method: :post, class: 'btn btn-info'
     %h5= link_to 'Add to list.', courseitems_path(course_id: @course), method: :post, class: 'btn btn-warning'
     
+    
+  %h5= link_to 'Go to Study Hall', study_hall_path(@course)  
+  
   %h4.heading Reviews (#{@reviews.count})   
   - @reviews.each do |review| 
     %h4= link_to review.creator.name, user_path(review.creator)

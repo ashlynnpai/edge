@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :require_user
+  before_action :require_user, only: [:create]
   
   def create
     @course = Course.find_by slug: params[:course_id]
@@ -12,5 +12,11 @@ class PostsController < ApplicationController
       @posts = @course.posts.reload
       render 'courses/study_hall'
     end
+  end
+  
+  def show
+    @post = Post.find(params[:id])
+    @replies = @post.replies
+    @reply = Reply.new  
   end
 end

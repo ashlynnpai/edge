@@ -16,7 +16,7 @@
   - @posts.each do |post| 
     %h4= link_to post.creator.name, user_path(post.creator)
     %p= post.updated_at
-    %p= post.title
+    %h4= link_to post.title, post_path(post)
     %p= post.content
 
   - if logged_in?
