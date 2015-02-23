@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     resources :replies, only: [:create]
   end
   
-  resources :replies, only: [:create]
+  #resources :replies, only: [:create]
   
 
   get 'study_hall/:id', to: 'courses#study_hall', as: 'study_hall'

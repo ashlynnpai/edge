@@ -6,10 +6,12 @@
 
     %h4.heading Comments 
     - @replies.each do |reply| 
+      %hr
       %h4= link_to reply.creator.name, user_path(reply.creator)
       %p= reply.updated_at
       %p= reply.content
 
+      %hr
     - if logged_in?
       %h4.heading Reply
       - reply = @reply

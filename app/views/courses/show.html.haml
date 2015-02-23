@@ -17,6 +17,7 @@
   
   %h4.heading Reviews (#{@reviews.count})   
   - @reviews.each do |review| 
+    %hr
     %h4= link_to review.creator.name, user_path(review.creator)
     %p= review.updated_at
     %p= review.content

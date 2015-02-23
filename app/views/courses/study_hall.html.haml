@@ -14,11 +14,13 @@
     
   %h4.heading Posts   
   - @posts.each do |post| 
+    %hr
     %h4= link_to post.creator.name, user_path(post.creator)
     %p= post.updated_at
     %h4= link_to post.title, post_path(post)
     %p= post.content
 
+    %hr
   - if logged_in?
     %h4.heading Post Something
     - post = @post
