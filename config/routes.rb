@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   end
   
   #resources :replies, only: [:create]
+  #http://weblog.jamisbuck.org/2007/2/5/nesting-resources
   
 
   get 'study_hall/:id', to: 'courses#study_hall', as: 'study_hall'
