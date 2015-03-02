@@ -1,0 +1,6 @@
+.container.course-info
+  .row
+    %h4.heading Edit your review
+    .col-sm-8
+      - review = @review
+      = render 'reviews/review', review: review 

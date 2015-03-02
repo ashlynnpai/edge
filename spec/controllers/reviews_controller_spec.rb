@@ -42,4 +42,44 @@ describe ReviewsController do
       end
     end
   end
+  describe "GET edit" do
+    context "with the user's own review" do
+      let(:current_user) { Fabricate(:user) }
+      before { session[:user_id] = current_user.id }
+      let(:course) { Fabricate(:course) }
+        it "assigns @review" do
+          review = Fabricate(:review, course_id: course.id, user_id: current_user.id)
+          get :edit, course_id: course.id, id: review.id
+          expect(assigns(:review)).to eq(review)
+        end       
+     end
+    context "with another's' review" do
+      let(:current_user) { Fabricate(:user) }
+      before { session[:user_id] = current_user.id }
+      let(:course) { Fabricate(:course) }
+      let(:reviewer) { Fabricate(:user) }
+        it "assigns @review" do
+          review = Fabricate(:review, course_id: course.id, user_id: reviewer.id)
+          get :edit, course_id: course.id, id: review.id
+          expect(response).to redirect_to course_path(course)
+        end       
+     end
+  end
+  describe "PUT update" do
+    context "with the user's own review" do
+      let(:current_user) { Fabricate(:user) }
+      before { session[:user_id] = current_user.id }
+      let(:course) { Fabricate(:course) }
+      it "updates the review" do
+        review = Fabricate(:review, course_id: course.id, content: "old review", user_id: current_user.id)
+        put :update, course_id: course.id, id: review.id, review: {content: "new review"}
+        expect(review.reload.content).to eq("new review")
+      end   
+      it "sets the flash success message" do
+        review = Fabricate(:review, course_id: course.id, content: "old review", user_id: current_user.id)
+        put :update, course_id: course.id, id: review.id, review: {content: "new review"}
+        expect(flash[:success]).not_to be_blank
+      end
+    end
+  end
 end
