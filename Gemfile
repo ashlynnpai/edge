@@ -13,6 +13,7 @@ gem 'bootstrap_form'
 gem 'haml-rails'
 gem 'bcrypt-ruby'
 gem 'figaro'
+gem 'dalli'
 
 
 group :development do

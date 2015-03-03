@@ -10,7 +10,7 @@
   - if current_user
     %h5= link_to 'I completed this course', add_course_status_path(course_id: @course, :status => 'completed'), method: :post, class: 'btn btn-success'
     %h5= link_to 'I am currently on this course', add_course_status_path(course_id: @course, :status => 'current'), method: :post, class: 'btn btn-info'
-    %h5= link_to 'Add to list.', courseitems_path(course_id: @course), method: :post, class: 'btn btn-warning'
+    %h5= link_to 'Add to list', courseitems_path(course_id: @course), method: :post, class: 'btn btn-warning'
     
     
   %h5= link_to 'Go to Study Hall', study_hall_path(@course)  
@@ -18,10 +18,12 @@
   %h4.heading Reviews (#{@reviews.count})   
   - @reviews.each do |review| 
     %hr
-    %h4= link_to review.creator.name, user_path(review.creator)
-    %p= review.updated_at
-    %p= review.content
-
+    - cache review do 
+      %h4= link_to review.creator.name, user_path(review.creator)
+      %p= review.updated_at
+      %p= review.content
+      - if logged_in? && current_user == review.creator
+        = link_to 'Edit this review', edit_course_review_path(@course, review)
   - if logged_in?
     %h4.heading Write a review
     - review = @review
