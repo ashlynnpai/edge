@@ -19,4 +19,16 @@ class PostsController < ApplicationController
     @replies = @post.replies
     @reply = Reply.new  
   end
+  
+  def edit
+    @post = Post.find(params[:id])
+    @course = @post.course
+    require_same_user
+  end
+  
+  private
+  
+  def require_same_user
+    redirect_to course_path(@course) unless logged_in? and (current_user == @post.creator)
+  end
 end

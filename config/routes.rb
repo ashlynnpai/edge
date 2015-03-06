@@ -4,11 +4,11 @@ Rails.application.routes.draw do
 
   resources :courses, only: [:index, :new, :create, :show] do
     resources :reviews, only: [:create, :edit, :update]
-    resources :posts, only: [:create]
+    resources :posts, only: [:create, :edit, :update, :show]
   end
   
-  resources :posts, only: [:show] do
-    resources :replies, only: [:create]
+  resources :posts, only: [:create, :edit, :update, :show] do
+    resources :replies, only: [:create, :edit, :update]
   end
   
   #resources :replies, only: [:create]

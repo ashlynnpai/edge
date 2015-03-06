@@ -50,4 +50,17 @@ describe PostsController do
       expect(assigns(:post)).to eq(post)
     end
   end
+  
+  describe "GET edit" do
+    context "with the user's own post" do
+      let(:current_user) { Fabricate(:user) }
+      before { session[:user_id] = current_user.id }
+      let(:course) { Fabricate (:course) }
+      it "sets @post" do
+        mypost = Fabricate(:post, course_id: course.id, user_id: current_user.id)
+        get :edit, course_id: course.id, id: mypost.id
+        expect(assigns(:post)).to eq(mypost)
+      end
+    end
+  end
 end

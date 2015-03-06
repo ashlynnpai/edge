@@ -1,0 +1,6 @@
+.container.course-info
+  .row
+    %h4.heading Edit your post
+    .col-sm-8
+      - mypost = @post
+      = render 'posts/post', post: mypost 
