@@ -26,6 +26,19 @@ class PostsController < ApplicationController
     require_same_user
   end
   
+  def update   
+    @post = Post.find(params[:id])
+    @course = @post.course
+    require_same_user
+  
+    if @post.update(params.require(:post).permit(:content, :title))
+      flash[:success] = "Your post was updated"
+      redirect_to course_path(@course)
+    else
+      render :edit
+    end
+  end
+  
   private
   
   def require_same_user

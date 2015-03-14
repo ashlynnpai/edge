@@ -63,4 +63,22 @@ describe PostsController do
       end
     end
   end
+  
+  describe "PUT update" do
+    context "with the user's own post" do
+      let(:current_user) { Fabricate(:user) }
+      before { session[:user_id] = current_user.id }
+      let(:course) { Fabricate(:course) }
+      it "updates the review" do
+        post = Fabricate(:post, course_id: course.id, content: "old post", user_id: current_user.id)
+        put :update, course_id: course.id, id: post.id, post: {content: "new post"}
+        expect(post.reload.content).to eq("new post")
+      end   
+      it "sets the flash success message" do
+        post = Fabricate(:post, course_id: course.id, content: "old post", user_id: current_user.id)
+        put :update, course_id: course.id, id: post.id, post: {content: "new post"}
+        expect(flash[:success]).not_to be_blank
+      end
+    end
+  end
 end
