@@ -21,6 +21,10 @@ class UsersController < ApplicationController
   def transcript
     @user = User.find_by slug: params[:id]
   end
+  
+  def points
+    @user = User.find_by slug: params[:id]
+  end
     
   
   private

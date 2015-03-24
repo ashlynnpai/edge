@@ -1,0 +1,18 @@
+!!! 5
+%html(lang="en-US")
+  %head
+    %title Edge
+    <link href='http://fonts.googleapis.com/css?family=Quicksand|Montserrat' rel='stylesheet' type='text/css'>
+    %meta(charset="UTF-8")
+    %meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    = csrf_meta_tag
+    = stylesheet_link_tag "application", media: "all"
+    = javascript_include_tag "application"
+  %body.main
+    .container-fluid
+      %header
+        %nav.navbar.navbar-fixed-top
+        = render 'shared/header'
+      .main-content
+        = render 'shared/messages'
+        = yield
