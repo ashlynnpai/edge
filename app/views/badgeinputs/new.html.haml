@@ -1,0 +1,17 @@
+%section.badgeinput.container
+  .row
+    .col-sm-8
+      .form-horizontal
+        = bootstrap_form_for @badgeinput do |f|
+          %header
+            %h4 Insert your usernames to pull your badges and points.
+          %fieldset
+            .col-sm-6
+              = f.text_field :treehouse_name, label: "Treehouse"
+              = f.text_field :codeschool_name, label: "Code School"
+              = f.text_field :codewars_name, label: "Codewars"
+              = f.text_field :github_name, label: "Github"
+          %fieldset.actions.control-group
+            .controls
+              = f.submit(@badgeinput.new_record? ? 'Submit Profile' : 'Update Profile', class: 'btn btn-success') 
+              
