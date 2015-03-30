@@ -5,7 +5,7 @@ class CategoriesController < ApplicationController
   end
   
   def create
-    @category = Category.create(params.require(:category).permit(:name))    
+    @category = Category.new(params.require(:category).permit(:name))    
     if @category.save
       flash[:success] = "Category created."
       redirect_to root_path

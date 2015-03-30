@@ -66,7 +66,7 @@ describe CoursesController do
          post :create, course: Fabricate.attributes_for(:course)
          expect(Course.count).to eq(0)
       end  
-       it 'expects render new' do
+       it 'expects a redirect to login' do
          post :create, course: Fabricate.attributes_for(:course)
          expect(response).to redirect_to login_path
        end

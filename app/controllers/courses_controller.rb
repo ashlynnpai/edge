@@ -10,7 +10,7 @@ class CoursesController < ApplicationController
   end
   
   def create
-    @course = Course.create(course_params)    
+    @course = Course.new(course_params)    
     if @course.save
       usercourse = UserCourse.new(user_id: current_user.id, course_id: @course.id, course_creator: true)
       usercourse.save
