@@ -35,6 +35,6 @@ Rails.application.routes.draw do
   
   resources :courseitems, only: [:index, :create]
   
-  resources :badgeinputs, only: [:new, :create]
+  resources :badgeinputs, only: [:new, :create, :show]
       
 end

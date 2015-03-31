@@ -23,7 +23,7 @@ describe BadgeinputsController do
       before do
         session[:user_id] = user.id
       end
-      it 'creates badgeinput record' do
+      it 'creates a badgeinput record' do
         post :create, badgeinput: Fabricate.attributes_for(:badgeinput)
         expect(Badgeinput.count).to eq(1)
       end  
@@ -44,5 +44,29 @@ describe BadgeinputsController do
       end
     end
   end
+  
+  describe 'GET show' do
+    context "with the user's own profile" do
+      let(:current_user) { Fabricate(:user) }
+      before { session[:user_id] = current_user.id }
+      it "sets @badgeinput" do
+        badgeinput = Fabricate(:badgeinput, user_id: current_user.id)
+        get :show, id: badgeinput.id
+        expect(assigns(:badgeinput)).to eq(badgeinput)
+      end
+    end
+    context "with another user's profile" do
+      let(:current_user) { Fabricate(:user) }
+      let(:profile_owner) { Fabricate(:user) }
+      before { session[:user_id] = current_user.id }
+      it "redirects to the root path" do
+        badgeinput = Fabricate(:badgeinput, user_id: profile_owner.id)
+        get :show, id: badgeinput.id
+        expect(response).to redirect_to root_path
+      end
+    end
+  end
 end
+
+
 

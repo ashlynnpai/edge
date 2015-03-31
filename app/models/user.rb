@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   has_many :reviews
   has_many :posts
   has_many :replies
+  has_one :badgeinput
   
   sluggable_column :name
   

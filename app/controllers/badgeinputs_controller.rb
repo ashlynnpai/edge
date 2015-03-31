@@ -16,10 +16,19 @@ class BadgeinputsController < ApplicationController
     end
   end
   
+  def show
+    @badgeinput = Badgeinput.find(params[:id])
+    require_same_user
+  end
+  
   private 
   
   def badgeinput_params
     params.require(:badgeinput).permit(:treehouse_name, :codeschool_name, :codewars_name, :github_name)
+  end
+  
+  def require_same_user
+    redirect_to root_path unless logged_in? and (current_user == @badgeinput.creator)
   end
 end
 

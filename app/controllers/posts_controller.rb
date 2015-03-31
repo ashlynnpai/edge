@@ -42,6 +42,6 @@ class PostsController < ApplicationController
   private
   
   def require_same_user
-    redirect_to course_path(@course) unless logged_in? and (current_user == @post.creator)
+    redirect_to root_path unless logged_in? and (current_user == @post.creator)
   end
 end
