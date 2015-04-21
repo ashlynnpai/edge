@@ -53,12 +53,12 @@ describe ReviewsController do
           expect(assigns(:review)).to eq(review)
         end       
      end
-    context "with another's' review" do
+    context "with another's review" do
       let(:current_user) { Fabricate(:user) }
       before { session[:user_id] = current_user.id }
       let(:course) { Fabricate(:course) }
       let(:reviewer) { Fabricate(:user) }
-        it "assigns @review" do
+      it "redirects the unauthorized user to the course path" do
           review = Fabricate(:review, course_id: course.id, user_id: reviewer.id)
           get :edit, course_id: course.id, id: review.id
           expect(response).to redirect_to course_path(course)

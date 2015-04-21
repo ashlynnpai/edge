@@ -13,4 +13,16 @@ class RepliesController < ApplicationController
       render 'posts/show'
     end
   end
+  
+  def edit
+    @reply = Reply.find(params[:id])
+    @post = @reply.post
+    require_same_user
+  end
+  
+  private
+  
+  def require_same_user
+    redirect_to post_path(@post) unless logged_in? and (current_user == @reply.creator)
+  end
 end

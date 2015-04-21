@@ -1,8 +1,10 @@
 require 'spec_helper'
 
 describe RepliesController do
+  
   describe 'POST create' do
     let(:mypost) { Fabricate(:post) }
+    
     context "with authenticated users and valid input" do
       let(:current_user) { Fabricate(:user) }
       before do
@@ -25,12 +27,14 @@ describe RepliesController do
         expect(response).to redirect_to post_path(mypost)
       end
     end
+    
     context "with unauthenticated users" do
       it "redirects to sign in path" do
         post :create, reply: Fabricate.attributes_for(:reply), post_id: mypost.id    
         expect(response).to redirect_to login_path
       end
     end
+    
     context "with invalid input" do
       let(:current_user) { Fabricate(:user) }
       before do
@@ -41,6 +45,32 @@ describe RepliesController do
         expect(response).to render_template('posts/show')
       end
     end
+  end
+  
+  describe "GET edit" do
+    
+    context "with the user's own reply" do
+      let(:current_user) { Fabricate(:user) }
+      before { session[:user_id] = current_user.id }
+      let(:mypost) { Fabricate(:post) }
+        it "assigns @reply" do
+          reply = Fabricate(:reply, post_id: mypost.id, user_id: current_user.id)
+          get :edit, post_id: mypost.id, id: reply.id
+          expect(assigns(:reply)).to eq(reply)
+        end       
+     end
+    
+     context "with another's reply" do
+      let(:current_user) { Fabricate(:user) }
+      before { session[:user_id] = current_user.id }
+      let(:mypost) { Fabricate(:post) }
+      let(:reply_author) { Fabricate(:user) }
+        it "redirects the unauthorized user to the course path" do
+          reply = Fabricate(:reply, post_id: mypost.id, user_id: reply_author.id)
+          get :edit, post_id: mypost.id, id: reply.id
+          expect(response).to redirect_to post_path(mypost)
+        end       
+     end
   end
 end
 

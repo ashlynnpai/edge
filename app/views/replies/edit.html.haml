@@ -1,0 +1,6 @@
+.container.course-info
+  .row
+    %h4.heading Edit your reply
+    .col-sm-8
+      - reply = @reply
+      = render 'replies/reply', reply: reply 
