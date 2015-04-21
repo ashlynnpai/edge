@@ -20,6 +20,21 @@ class RepliesController < ApplicationController
     require_same_user
   end
   
+  def update
+    @reply = Reply.find(params[:id])
+    @post = @reply.post
+    if logged_in? and (current_user == @reply.creator)    
+      if @reply.update(params.require(:reply).permit(:content))
+        flash[:success] = "Your comment was updated."
+        redirect_to post_path(@post)
+      else
+        render :edit
+      end
+    else
+      redirect_to post_path(@post)
+    end
+  end
+  
   private
   
   def require_same_user

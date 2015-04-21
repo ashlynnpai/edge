@@ -72,5 +72,41 @@ describe RepliesController do
         end       
      end
   end
+  
+  describe "PUT update" do
+    
+    context "with the user's own reply" do
+      let(:current_user) { Fabricate(:user) }
+      before { session[:user_id] = current_user.id }
+      let(:mypost) { Fabricate(:post) }
+      it "updates the reply" do
+        reply = Fabricate(:reply, post_id: mypost.id, content: "old reply", user_id: current_user.id)
+        put :update, post_id: mypost.id, id: reply.id, reply: {content: "new reply"}
+        expect(reply.reload.content).to eq("new reply")
+      end   
+      it "sets the flash success message" do
+        reply = Fabricate(:reply, post_id: mypost.id, content: "old reply", user_id: current_user.id)
+        put :update, post_id: mypost.id, id: reply.id, reply: {content: "new reply"}
+        expect(flash[:success]).not_to be_blank
+      end
+    end
+    
+    context "with an unauthorized user" do
+      let(:current_user) { Fabricate(:user) }
+      before { session[:user_id] = current_user.id }
+      let(:mypost) { Fabricate(:post) }
+      let(:reply_author) { Fabricate(:user) }
+      it "does not update the reply" do
+        reply = Fabricate(:reply, post_id: mypost.id, content: "old reply", user_id: reply_author.id)
+        put :update, post_id: mypost.id, id: reply.id, reply: {content: "new reply"}
+        expect(reply.reload.content).to eq("old reply")
+      end   
+      it "redirects to the post path" do
+        reply = Fabricate(:reply, post_id: mypost.id, content: "old reply", user_id: reply_author.id)
+        put :update, post_id: mypost.id, id: reply.id, reply: {content: "new reply"}
+        expect(response).to redirect_to post_path(mypost)
+      end
+    end
+  end
 end
 
