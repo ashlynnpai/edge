@@ -43,9 +43,10 @@ describe UsersController do
   
   describe "GET transcript" do
     it "sets @user" do
-        user = Fabricate(:user)
-        get :show, id: user.slug
-        expect(assigns(:user)).to eq(user)
+      user = Fabricate(:user)
+      get :transcript, id: user.slug
+      expect(assigns(:user)).to eq(user)
     end
   end
+
 end

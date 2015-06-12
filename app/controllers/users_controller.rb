@@ -24,8 +24,7 @@ class UsersController < ApplicationController
   
   def points
     @user = User.find_by slug: params[:id]
-  end
-    
+  end    
   
   private
   
