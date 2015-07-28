@@ -48,5 +48,20 @@ describe UsersController do
       expect(assigns(:user)).to eq(user)
     end
   end
-
+  
+  describe "make private" do
+    context "with authenticated user" do
+      let(:user){ Fabricate(:user) }
+      before {session[:user_id] = user.id}
+      it "redirects to the user path" do
+        patch :make_private, id: user.id, user: {public_profile: false}
+        expect(response).to redirect_to dashboard_path
+      end
+      it "sets the flash success message" do
+        patch :make_private, id: user.id, user: {public_profile: false}
+        expect(flash[:success]).to be_present
+      end
+    end
+  end
 end
+  

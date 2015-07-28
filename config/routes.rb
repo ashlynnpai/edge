@@ -25,6 +25,8 @@ Rails.application.routes.draw do
     end
   end
   
+  patch 'make_private', to: 'users#make_private'
+  
   get '/register', to: 'users#new'  
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'

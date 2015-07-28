@@ -26,6 +26,19 @@ class UsersController < ApplicationController
     @user = User.find_by slug: params[:id]
   end    
   
+  def make_private
+    @user = current_user
+    if current_user
+    # validations won't block user update
+      if @user.update_attribute(:public_profile, false)
+        flash[:success] = "Profile set to private."
+      else
+        flash[:danger] = "Profile has not been changed."
+      end
+      redirect_to dashboard_path
+    end
+  end
+  
   private
   
   def user_params

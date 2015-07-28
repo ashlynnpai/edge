@@ -6,5 +6,5 @@
         .form-group
           = bootstrap_form_for @course do |f|
             = f.text_field :name, label: "Name of Course"
-            = f.text_field :provider, label: "Course Provider"
+            = f.text_field :institution, label: "Course institution"
             %input(type="submit" value="Add Course" class="btn btn-success")
