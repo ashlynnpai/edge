@@ -11,7 +11,6 @@ class Course < ActiveRecord::Base
   has_many :posts
   
   validates :name, presence: true, uniqueness: { case_sensitive: false }
-  validates :provider, presence: true
   
   has_many :queue_items
 

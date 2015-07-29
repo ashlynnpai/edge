@@ -45,19 +45,19 @@ describe CoursesController do
     context 'with invalid data and authenticated user' do
        before {set_current_user}
        it 'does not create course record' do
-         post :create, course: Fabricate.attributes_for(:course, provider: nil)
+         post :create, course: Fabricate.attributes_for(:course, institution: nil)
          expect(Course.count).to eq(0)
       end  
        it 'sets the flash error message' do
-         post :create, course: Fabricate.attributes_for(:course, provider: nil)
+         post :create, course: Fabricate.attributes_for(:course, institution: nil)
          expect(flash[:danger]).not_to be_blank
        end
        it 'expects render new' do
-         post :create, course: Fabricate.attributes_for(:course, provider: nil)
+         post :create, course: Fabricate.attributes_for(:course, institution: nil)
          expect(response).to render_template 'new'
        end
        it 'does not create the join table usercourse record' do
-         post :create, course: Fabricate.attributes_for(:course, provider: nil)
+         post :create, course: Fabricate.attributes_for(:course, institution: nil)
          expect(UserCourse.count).to eq(0)
        end
     end
