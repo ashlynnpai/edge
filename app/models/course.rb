@@ -11,7 +11,7 @@ class Course < ActiveRecord::Base
   has_many :posts
   
   validates :name, presence: true, uniqueness: { case_sensitive: false }
-  
+  validates :institution, presence: true
   has_many :queue_items
 
   sluggable_column :name
