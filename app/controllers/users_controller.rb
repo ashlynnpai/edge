@@ -36,6 +36,8 @@ class UsersController < ApplicationController
         flash[:danger] = "Profile has not been changed."
       end
       redirect_to dashboard_path
+    else
+      redirect_to root_path
     end
   end
   
