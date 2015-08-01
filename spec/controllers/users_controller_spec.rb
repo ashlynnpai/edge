@@ -69,6 +69,15 @@ describe UsersController do
           expect(response).to redirect_to root_path
         end
       end
+    context "with the incorrect user in the session" do
+      let(:user){ Fabricate(:user) }
+      let(:current_user){ Fabricate(:user) }
+      before {session[:current_user_id] = user.id}
+      it "redirects to the root path" do
+        patch :make_private, id: user.id, user: {public_profile: false}
+        expect(response).to redirect_to root_path
+      end
+    end
   end
 end
   
