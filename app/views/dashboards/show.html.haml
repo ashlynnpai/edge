@@ -1,0 +1,8 @@
+
+= @user.name
+
+%h4 Privacy Settings
+
+- if @user.public_profile == true
+  %p Your profile is currently public
+  %h5= link_to 'Make Profile Private', make_private_path, method: :patch, class: 'btn btn-success'
