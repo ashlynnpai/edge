@@ -49,6 +49,14 @@ describe UsersController do
     end
   end
   
+  describe "GET points" do
+    it "sets @user" do
+      user = Fabricate(:user)
+      get :points, id: user.slug
+      expect(assigns(:user)).to eq(user)
+    end
+  end
+  
   describe "make private" do
     context "with authenticated user" do
       let(:user){ Fabricate(:user) }
