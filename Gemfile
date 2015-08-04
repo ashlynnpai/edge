@@ -14,7 +14,7 @@ gem 'haml-rails'
 gem 'bcrypt-ruby'
 gem 'figaro'
 gem 'dalli'
-
+gem 'httparty'
 
 group :development do
   gem 'thin'
