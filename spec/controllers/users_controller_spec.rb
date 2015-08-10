@@ -57,6 +57,14 @@ describe UsersController do
     end
   end
   
+  describe "GET badges" do
+    it "sets @user" do
+      user = Fabricate(:user)
+      get :badges, id: user.slug
+      expect(assigns(:user)).to eq(user)
+    end
+  end
+  
   describe "make private" do
     context "with authenticated user" do
       let(:user){ Fabricate(:user) }

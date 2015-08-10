@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     member do
       get 'transcript'
       get 'points'
+      get 'badges'
     end
   end
   

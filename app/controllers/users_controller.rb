@@ -26,6 +26,10 @@ class UsersController < ApplicationController
     @user = User.find_by slug: params[:id]
   end    
   
+  def badges
+    @user = User.find_by slug: params[:id]
+  end    
+  
   def make_private
     @user = current_user
     if current_user
