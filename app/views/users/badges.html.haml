@@ -1,0 +1,15 @@
+%section.container
+  .row
+    %h2 Codeschool Badges
+
+    %h4= @codeschool["user"]["username"]
+    %h4 Points #{@codeschool["user"]["total_score"]}
+    = @codeschool["user"]["total_score"]
+
+    %hr
+
+    - @codeschool["courses"]["completed"].each do |course|
+      = course["title"]
+      = image_tag course["badge"], size: "100"
+
+    %hr
