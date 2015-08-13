@@ -29,3 +29,11 @@
     - @treehouse["badges"].each do |badge|
       %p= image_tag badge["icon_url"], size: "100"  
       %p= badge["name"]
+      
+  .row
+    %h2 Codewars
+    %h4 Javascript Kata Completed #{@codewars_javascript}
+    %h4 Latest Katas
+    - @katas.each do |kata|
+      %h4= kata
+      %hr
