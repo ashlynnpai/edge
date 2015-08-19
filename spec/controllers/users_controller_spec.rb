@@ -67,7 +67,7 @@ describe UsersController do
   
   describe "make private" do
     context "with authenticated user" do
-      let(:user){ Fabricate(:user) }
+      let(:user){ Fabricate(:user, public_profile: true) }
       before {session[:user_id] = user.id}
       it "redirects to the user path" do
         patch :make_private, id: user.id, user: {public_profile: false}
@@ -76,6 +76,10 @@ describe UsersController do
       it "sets the flash success message" do
         patch :make_private, id: user.id, user: {public_profile: false}
         expect(flash[:success]).to be_present
+      end
+      it "sets the user profile to false" do
+        patch :make_private, id: user.id, user: {public_profile: false}
+        expect(user.reload.public_profile).to eq(false)
       end
     end
     context "with unauthenticated user" do
