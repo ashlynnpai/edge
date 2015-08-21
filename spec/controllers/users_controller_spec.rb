@@ -101,6 +101,10 @@ describe UsersController do
         patch :make_private, id: user.id, user: {public_profile: false}
         expect(response).to redirect_to root_path
       end
+      it "does not set the user profile to false" do
+        patch :make_private, id: user.id, user: {public_profile: false}
+        expect(user.reload.public_profile).to eq(true)
+      end
     end
   end
 end
