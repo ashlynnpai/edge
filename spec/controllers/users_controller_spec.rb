@@ -106,6 +106,13 @@ describe UsersController do
         expect(user.reload.public_profile).to eq(true)
       end
     end
+    describe "make public" do
+      let(:user){ Fabricate(:user) }
+      it "redirects to the user path" do
+        patch :make_public, id: user.id, user: {public_profile: true}
+        expect(response).to redirect_to dashboard_path
+      end
+    end
   end
 end
   

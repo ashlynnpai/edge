@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   end
   
   patch 'make_private', to: 'users#make_private'
+  patch 'make_public', to: 'users#make_public'
   
   get '/register', to: 'users#new'  
   get '/login', to: 'sessions#new'

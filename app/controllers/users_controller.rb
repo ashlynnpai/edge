@@ -45,6 +45,10 @@ class UsersController < ApplicationController
     end
   end
   
+  def make_public
+    redirect_to dashboard_path
+  end
+  
   private
   
   def user_params
