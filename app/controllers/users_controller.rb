@@ -46,7 +46,17 @@ class UsersController < ApplicationController
   end
   
   def make_public
-    redirect_to dashboard_path
+    @user = current_user
+    if current_user
+      if @user.update_attribute(:public_profile, true)
+        flash[:success] = "Profile set to public."
+      else
+        flash[:danger] = "Profile has not been changed."
+      end
+      redirect_to dashboard_path
+    else
+      redirect_to root_path
+    end
   end
   
   private
